@@ -29,7 +29,7 @@
 ### Установка
 
 1. Клонируйте репозиторий
-   ```sh
+   ```
    git clone https://github.com/R1con/BookLibrary.git
    ```
 
