@@ -36,6 +36,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
+        android:maxLength="4"
         android:ems="10"
         android:hint="Страницы"
         android:inputType="number"

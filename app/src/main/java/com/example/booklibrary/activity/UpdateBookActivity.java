@@ -21,6 +21,8 @@ import com.example.booklibrary.interfaces.Validable;
 import org.apache.commons.lang3.StringUtils;
 
 public class UpdateBookActivity extends AppCompatActivity implements Validable {
+    public static final int MAX_LENGTH_EDIT_TEXT = 20;
+
     private EditText titleInput;
     private EditText authorInput;
     private EditText pagesInput;
@@ -97,6 +99,14 @@ public class UpdateBookActivity extends AppCompatActivity implements Validable {
             Toast.makeText(UpdateBookActivity.this, "Поля не могут быть пробелом!", Toast.LENGTH_SHORT).show();
             return false;
         }
+
+        if (titleInput.getText().toString().length() > MAX_LENGTH_EDIT_TEXT ||
+                authorInput.getText().toString().length() > MAX_LENGTH_EDIT_TEXT) {
+            Toast.makeText(UpdateBookActivity.this, "Длина поля автор/название не может превышать 30 символов!", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+
 
         return true;
     }
