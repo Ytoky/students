@@ -1,4 +1,4 @@
-package com.example.booklibrary.interfaces;
+package com.example.students.interfaces;
 
 public interface Validable {
     boolean validate();

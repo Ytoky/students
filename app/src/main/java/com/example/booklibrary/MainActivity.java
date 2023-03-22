@@ -1,4 +1,4 @@
-package com.example.booklibrary;
+package com.example.students;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
@@ -18,28 +18,29 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.booklibrary.activity.AddBookActivity;
-import com.example.booklibrary.adapter.BookAdapter;
-import com.example.booklibrary.common.enums.BookColumnNumber;
-import com.example.booklibrary.dao.BookDataBaseHelper;
+import com.example.booklibrary.R;
+import com.example.students.activity.AddStudentActivity;
+import com.example.students.adapter.StudentAdapter;
+import com.example.students.common.enums.StudentsColumnNumber;
+import com.example.students.dao.StudentDataBaseHelper;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-    public static final String QUESTION_MESSAGE_DELETE_ALL = "Вы уверены что хотите удалить все книги?";
-    public static final String TITLE_DELETE_ALL_BOOK = "Удалить все книги?";
+    public static final String QUESTION_MESSAGE_DELETE_ALL = "Вы уверены что хотите удалить всех студентов?";
+    public static final String TITLE_DELETE_ALL_STUDENT = "Удалить всех студентов?";
     public static final String BUTTON_NAME_YES = "Да";
     public static final String BUTTON_NAME_NO = "Нет";
 
     private ImageView emptyImageview;
     private TextView noDataText;
-    private BookDataBaseHelper bookDataBaseHelper;
-    private List<String> bookIds;
-    private List<String> bookTitles;
-    private List<String> bookAuthors;
-    private List<String> bookPages;
+    private StudentDataBaseHelper studentDataBaseHelper;
+    private List<String> studentIds;
+    private List<String> studentName;
+    private List<String> studentSurname;
+    private List<String> studentCod;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,19 +52,19 @@ public class MainActivity extends AppCompatActivity {
         noDataText = findViewById(R.id.no_data);
         FloatingActionButton addButton = findViewById(R.id.add_button);
         addButton.setOnClickListener(view -> {
-                    Intent intent = new Intent(MainActivity.this, AddBookActivity.class);
+                    Intent intent = new Intent(MainActivity.this, AddStudentActivity.class);
                     startActivity(intent);
                 }
         );
 
-        bookDataBaseHelper = new BookDataBaseHelper(MainActivity.this);
-        bookIds = new ArrayList<>();
-        bookTitles = new ArrayList<>();
-        bookAuthors = new ArrayList<>();
-        bookPages = new ArrayList<>();
+        studentDataBaseHelper = new StudentDataBaseHelper(MainActivity.this);
+        studentIds = new ArrayList<>();
+        studentName = new ArrayList<>();
+        studentSurname = new ArrayList<>();
+        studentCod = new ArrayList<>();
 
-        BookAdapter bookAdapter = new BookAdapter(MainActivity.this, bookIds, bookTitles, bookAuthors, bookPages, this);
-        recyclerView.setAdapter(bookAdapter);
+        StudentAdapter studentAdapter = new StudentAdapter(MainActivity.this, studentIds, studentName, studentSurname, studentCod, this);
+        recyclerView.setAdapter(studentAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
 
         storeDataInArrays();
@@ -91,11 +92,11 @@ public class MainActivity extends AppCompatActivity {
 
     void confirmDialog() {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
-        alertDialog.setTitle(TITLE_DELETE_ALL_BOOK);
+        alertDialog.setTitle(TITLE_DELETE_ALL_STUDENT);
         alertDialog.setMessage(QUESTION_MESSAGE_DELETE_ALL);
         alertDialog.setPositiveButton(BUTTON_NAME_YES, (dialogInterface, i) -> {
-            try (BookDataBaseHelper bookDataBaseHelper = new BookDataBaseHelper(MainActivity.this)) {
-                bookDataBaseHelper.deleteAll();
+            try (StudentDataBaseHelper studentDataBaseHelper = new StudentDataBaseHelper(MainActivity.this)) {
+                studentDataBaseHelper.deleteAll();
                 Intent intent = new Intent(MainActivity.this, MainActivity.class);
                 startActivity(intent);
                 finish();
@@ -121,7 +122,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     void storeDataInArrays() {
-        Cursor cursor = bookDataBaseHelper.getAllBook();
+        Cursor cursor = studentDataBaseHelper.getAllBook();
         if (isEmptyBook(cursor.getCount())) {
             showEmptyImage();
         } else {
@@ -137,10 +138,10 @@ public class MainActivity extends AppCompatActivity {
     private void showBooks(Cursor cursor) {
         AsyncTask.execute(() -> {
             while (cursor.moveToNext()) {
-                bookIds.add(cursor.getString(BookColumnNumber.ID.getColumn()));
-                bookTitles.add(cursor.getString(BookColumnNumber.TITLE.getColumn()));
-                bookAuthors.add(cursor.getString(BookColumnNumber.AUTHOR.getColumn()));
-                bookPages.add(cursor.getString(BookColumnNumber.PAGES.getColumn()));
+                studentIds.add(cursor.getString(StudentsColumnNumber.ID.getColumn()));
+                studentName.add(cursor.getString(StudentsColumnNumber.NAME.getColumn()));
+                studentSurname.add(cursor.getString(StudentsColumnNumber.SURNAME.getColumn()));
+                studentCod.add(cursor.getString(StudentsColumnNumber.COD.getColumn()));
             }
             emptyImageview.setVisibility(View.GONE);
             noDataText.setVisibility(View.GONE);

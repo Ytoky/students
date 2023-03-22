@@ -1,4 +1,4 @@
-package com.example.booklibrary.activity;
+package com.example.students.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -6,8 +6,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 
-import com.example.booklibrary.MainActivity;
 import com.example.booklibrary.R;
+import com.example.students.MainActivity;
 
 
 public class SplashScreenActivity extends AppCompatActivity {

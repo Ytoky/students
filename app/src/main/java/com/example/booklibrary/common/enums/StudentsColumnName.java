@@ -1,14 +1,14 @@
-package com.example.booklibrary.common.enums;
+package com.example.students.common.enums;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @AllArgsConstructor
-public enum BookColumnName {
+public enum StudentsColumnName {
     ID("id"),
-    TITLE("title"),
-    AUTHOR("author"),
-    PAGES("pages");
+    NAME("name"),
+    SURNAME("surname"),
+    COD("cod");
 
     @Getter
     private final String name;
